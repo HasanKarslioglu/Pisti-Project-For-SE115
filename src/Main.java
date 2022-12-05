@@ -1,14 +1,28 @@
-public class Main {
-    public static void main(String[] args) {
-        Deck undistributedDeck = new Deck(52);
-        Deck tableDeck = new Deck(52);
-        Deck playerDeck = new Deck(4);
-        Deck playerCollectedDeck = new Deck(4);
-        Deck computerDeck = new Deck(52);
-        Deck computerCollectedDeck = new Deck(52);
 
-        undistributedDeck.fillDeck();
-        undistributedDeck.printDeck();
-        playerDeck.printDeck();
+import java.util.Scanner;
+
+public class Main {
+
+    static Deck unDistributedDeck = new Deck(52);
+    static Deck tableDeck = new Deck(52);
+    static Player user = new Player();
+    static Player computer = new Player();
+
+    public static void startGame(){
+        //Making Decks
+        unDistributedDeck.fillDeck();
+        unDistributedDeck.ShuffleDeck();
+
+        //Asking UserName
+        System.out.println("Please Enter Your Name");
+        Scanner sc = new Scanner(System.in);
+        String name = sc.nextLine();
+        user.setName(name);
+
+        //Setting ComputerName
+        computer.setName("Computer");
+    }
+    public static void main(String[] args) {
+        startGame();
     }
 }

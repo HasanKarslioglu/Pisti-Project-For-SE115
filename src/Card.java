@@ -1,6 +1,6 @@
 public class Card {
 
-    //------Definations---------//
+    //------DEFINATIONS---------//
     private char num;
     private char type;
 
@@ -10,7 +10,8 @@ public class Card {
         this.type = type;
     }
     Card(){
-
+        num = '0';
+        type = '0';
     }
 
     //------GETTERS---------//
@@ -20,6 +21,16 @@ public class Card {
     //------SETTERS---------//
     public void setNum(char num) {this.num = num;}
     public void setType(char type) {this.type = type;}
-
 }
+
+
+
+
+
+
+
+
+
+
+
 
