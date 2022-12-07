@@ -20,6 +20,7 @@ public class Deck {
 
     //----------METHODS----------//
     public void printDeck(){
+        //Printing cards in groups of 4
         for (int i = 0; i < cards.length; i += 4) {
             for (int j = 0; j < 4; j++) {
                 System.out.print(cards[i+j].getNum() + "-");
@@ -31,6 +32,7 @@ public class Deck {
     }
     public void fillDeck(){
         int count = 0;
+        //Filling deck based on cardTypes and cardValues
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 13; j++) {
                 cards[count].setType(cardTypes[i]);
@@ -41,10 +43,13 @@ public class Deck {
     }
 
     public void shuffleDeck(){
+        //if for loop count(cards.length * 2) gets bigger, the more random it will be
         for (int i = 0; i < (cards.length * 2); i++) {
+        //Choosing 2 random index from cards array
             int firstIndex = rnd.nextInt(cards.length);
             int secondIndex = rnd.nextInt(cards.length);
 
+        //Then switch 2 of them
             Card temp = cards[firstIndex];
             cards[firstIndex] = cards[secondIndex];
             cards[secondIndex] = temp;
