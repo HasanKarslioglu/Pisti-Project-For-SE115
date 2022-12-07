@@ -1,24 +1,24 @@
 public class Card {
 
-    //------DEFINATIONS---------//
+        //------DEFINATIONS---------//
     private char num;
     private char type;
 
-    //----------CONSTRUCTORS----------//
+        //----------CONSTRUCTORS----------//
     Card(char num, char type){
         this.num = num;
         this.type = type;
     }
     Card(){
-        num = '0';
-        type = '0';
+        num = 'x';
+        type = 'x';
     }
 
-    //------GETTERS---------//
+        //------GETTERS---------//
     public char getNum() {return num;}
     public char getType() {return type;}
 
-    //------SETTERS---------//
+        //------SETTERS---------//
     public void setNum(char num) {this.num = num;}
     public void setType(char type) {this.type = type;}
 }

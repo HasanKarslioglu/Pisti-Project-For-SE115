@@ -2,15 +2,16 @@ import java.util.Random;
 import java.util.Scanner;
 public class Deck {
 
-    //------DEFINATIONS---------//
+        //------DEFINATIONS---------//
     Random rnd = new Random();
     Scanner sc = new Scanner(System.in);
     private char[] cardValues = {'A', '2', '3', '4', '5', '6', '7',
                                 '8', '9', '0', 'J', 'Q', 'K'};
     private char[] cardTypes = {'♠', '♣', '♥', '♦'};
     private Card[] cards;
+    private int lastIndex = 0;
 
-    //----------CONSTRUCTOR----------//
+        //----------CONSTRUCTOR----------//
     Deck(int cardNumbers){
         cards = new Card[cardNumbers];
         for (int i = 0; i < cardNumbers; i++) {
@@ -18,13 +19,22 @@ public class Deck {
         }
     }
 
-    //----------METHODS----------//
+        //----------METHODS----------//
     public void printDeck(){
         //Printing cards in groups of 4
-        for (int i = 0; i < cards.length; i += 4) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(cards[i+j].getNum() + "-");
-                System.out.print(cards[i+j].getType());
+        if (cards.length > 4){
+            for (int i = 0; i < cards.length; i += 4) {
+                for (int j = 0; j < 4; j++) {
+                    System.out.print(cards[i+j].getNum() + "-");
+                    System.out.print(cards[i+j].getType());
+                    System.out.print("   ");
+                }
+                System.out.println();
+            }
+        }else {
+            for (int i = 0; i < cards.length; i++) {
+                System.out.print(cards[i].getNum() + "-");
+                System.out.print(cards[i].getType());
                 System.out.print("   ");
             }
             System.out.println();
@@ -40,6 +50,7 @@ public class Deck {
                 count++;
             }
         }
+        lastIndex = 51;
     }
 
     public void shuffleDeck(){
@@ -110,7 +121,31 @@ public class Deck {
             cards[i] = tempCardArr[i];
         }
     }
+
+    public void addCard(Card newCard){
+        //Add card to cards array
+        cards[lastIndex] = newCard;
+        lastIndex++;
+    }
+
+    public Card removeCard(int index){
+        //Remove card from specific index
+        Card temp = cards[index];
+        //Add empty card instead of removed card
+        cards[index] = new Card();
+        return temp;
+    }
+
+    public Card removeCard(){
+        //Remove card from specific index
+        Card temp = cards[lastIndex];
+        //Add empty card instead of removed card
+        cards[lastIndex] = new Card();
+        lastIndex--;
+        return temp;
+    }
 }
+
 
 
 

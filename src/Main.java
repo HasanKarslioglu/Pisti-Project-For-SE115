@@ -3,26 +3,22 @@ import java.util.Scanner;
 
 public class Main {
 
+    static GameMode gamemode = new GameMode();
     static Deck unDistributedDeck = new Deck(52);
     static Deck tableDeck = new Deck(52);
     static Player user = new Player();
     static Player computer = new Player();
+    static int raundCount = 0;
 
     public static void startGame(){
-        //Making Decks
 
         unDistributedDeck.fillDeck();
-        unDistributedDeck.printDeck();
-        System.out.println("-----------------------------------------");
-
         unDistributedDeck.shuffleDeck();
-        unDistributedDeck.printDeck();
-        System.out.println("-----------------------------------------");
-
-        unDistributedDeck.cutDeck();
-        unDistributedDeck.printDeck();
+        gamemode.dealCards(unDistributedDeck, tableDeck, user, computer);
 
 
+
+        //unDistributedDeck.cutDeck();
         /*
         //Asking UserName
         System.out.println("Please Enter Your Name");
@@ -36,7 +32,19 @@ public class Main {
 
         //Asking cut.
     }
+
     public static void main(String[] args) {
         startGame();
+
     }
 }
+
+
+
+
+
+
+
+
+
+
