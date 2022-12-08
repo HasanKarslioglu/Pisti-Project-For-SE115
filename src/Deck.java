@@ -135,6 +135,7 @@ public class Deck {
     }
 
     //--------GETTERS---------//
+    public int getLastIndex(){return lastIndex;}
     public Card getCard(int index){return cards[index];}
 }
 
