@@ -1,22 +1,17 @@
-
-import java.util.Scanner;
-
 public class Main {
 
-    static GameMode gamemode = new GameMode();
     static Deck unDistributedDeck = new Deck(52);
     static Deck tableDeck = new Deck(52);
-    static Player user = new Player();
-    static Player computer = new Player();
-    static int raundCount = 0;
+    static Player user = new Player("Hasan");
+    static Player computer = new Player("Computer");
+    static GameMode gamemode = new GameMode(unDistributedDeck, tableDeck, user, computer);
 
     public static void startGame(){
 
         unDistributedDeck.fillDeck();
         unDistributedDeck.shuffleDeck();
-        gamemode.dealCards(unDistributedDeck, tableDeck, user, computer);
-
-
+        gamemode.dealCards();
+        gamemode.printRound();
 
         //unDistributedDeck.cutDeck();
         /*

@@ -21,24 +21,13 @@ public class Deck {
 
         //----------METHODS----------//
     public void printDeck(){
-        //Printing cards in groups of 4
-        if (cards.length > 4){
-            for (int i = 0; i < cards.length; i += 4) {
-                for (int j = 0; j < 4; j++) {
-                    System.out.print(cards[i+j].getNum() + "-");
-                    System.out.print(cards[i+j].getType());
-                    System.out.print("   ");
-                }
-                System.out.println();
-            }
-        }else {
-            for (int i = 0; i < cards.length; i++) {
-                System.out.print(cards[i].getNum() + "-");
-                System.out.print(cards[i].getType());
-                System.out.print("   ");
-            }
-            System.out.println();
+        System.out.print("Table Deck ▶ ");
+        System.out.println("\t\t\t\t\t" +cards[lastIndex-1].getType() + "" + cards[lastIndex-1].getNum());
+        System.out.print("\t\t\t\t\t\t\t ");
+        for (int i = 0; i < (lastIndex - 1); i++) {
+            System.out.print(cards[i].getType() + "" + cards[i].getNum() + " ");
         }
+        System.out.println();
     }
     public void fillDeck(){
         int count = 0;
@@ -144,6 +133,9 @@ public class Deck {
         lastIndex--;
         return temp;
     }
+
+    //--------GETTERS---------//
+    public Card getCard(int index){return cards[index];}
 }
 
 

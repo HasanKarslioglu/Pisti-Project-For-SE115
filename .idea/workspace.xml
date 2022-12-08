@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8e43613a-632a-4249-9e90-b2db72214b37" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameMode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
     </list>
@@ -78,31 +78,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Deck.java</url>
-          <line>124</line>
-          <properties class="Deck" method="addCard">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="tempCardArr" />
-        <watch expression="tableDeck" language="JAVA" />
-        <watch expression="tableDeck" language="JAVA" />
-        <watch expression="unDistributedDeck.cards" />
-        <watch expression="unDistributedDeck.cards" />
-        <watch expression="cards[20]" />
-        <watch expression="unDistributedDeck.cards" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>
