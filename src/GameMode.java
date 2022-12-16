@@ -3,16 +3,16 @@ public class GameMode {
 
     //------DEFINATIONS---------//
     private int roundCount = 0;
-    private Deck unDistributedDeck;
-    private Deck tableDeck;
+    private CardList unDistributedCardList;
+    private CardList tableCardList;
     private Player computer;
     private Player user;
 
 
         //--------------CONSTRUCTOR--------------//
-    GameMode(Deck unDistributedDeck, Deck tableDeck, Player user, Player computer){
-        this.unDistributedDeck = unDistributedDeck;
-        this.tableDeck = tableDeck;
+    GameMode(CardList unDistributedCardList, CardList tableCardList, Player user, Player computer){
+        this.unDistributedCardList = unDistributedCardList;
+        this.tableCardList = tableCardList;
         this.computer = computer;
         this.user = user;
     }
@@ -26,7 +26,7 @@ public class GameMode {
         computer.printHand();
         System.out.println("---------------------------------------------------------------------\n");
         //Printing table deck
-        tableDeck.printDeck();
+        tableCardList.printDeck();
         System.out.println("\n---------------------------------------------------------------------");
         //Printing user hand
         user.printHand();
@@ -39,17 +39,17 @@ public class GameMode {
         //If roundCount is 0, it means its first dealing. That's why, we have to deal to tableDeck too
         if (roundCount == 0){
             for (int i = 0; i < 4; i++) {
-                tableDeck.addCard(unDistributedDeck.removeCard());
-                user.handDeck.addCard(unDistributedDeck.removeCard());
-                computer.handDeck.addCard(unDistributedDeck.removeCard());
+                tableCardList.addCard(unDistributedCardList.removeCard());
+                user.getHandCards().addCard(unDistributedCardList.removeCard());
+                computer.getHandCards().addCard(unDistributedCardList.removeCard());
             }
         }
         //If roundCount is 1, it means its not first dealing. That's why,
         // we have to deal to just user and computer not tableDeck
         else {
             for (int i = 0; i < 4; i++) {
-                user.handDeck.addCard(unDistributedDeck.removeCard());
-                computer.handDeck.addCard(unDistributedDeck.removeCard());
+                user.getHandCards().addCard(unDistributedCardList.removeCard());
+                computer.getHandCards().addCard(unDistributedCardList.removeCard());
             }
         }
     }

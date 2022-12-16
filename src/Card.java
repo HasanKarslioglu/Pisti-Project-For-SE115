@@ -5,10 +5,8 @@ public class Card {
     private char type;
 
         //----------CONSTRUCTORS----------//
-    Card(char num, char type){
-        this.num = num;
-        this.type = type;
-    }
+
+    //That constructors sets null card
     Card(){
         num = 'x';
         type = 'x';

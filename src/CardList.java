@@ -1,25 +1,37 @@
 import java.util.Random;
 import java.util.Scanner;
-public class Deck {
+
+public class CardList {
 
         //------DEFINATIONS---------//
-    Random rnd = new Random();
-    Scanner sc = new Scanner(System.in);
-    private char[] cardValues = {'A', '2', '3', '4', '5', '6', '7',
+    private static final char[] cardValues = {'A', '2', '3', '4', '5', '6', '7',
                                 '8', '9', '0', 'J', 'Q', 'K'};
-    private char[] cardTypes = {'♠', '♣', '♥', '♦'};
+    private static final char[] cardTypes = {'♠', '♣', '♥', '♦'};
+    Random rnd;
+    Scanner sc;
     private Card[] cards;
     private int lastIndex = 0;
 
         //----------CONSTRUCTOR----------//
-    Deck(int cardNumbers){
+    CardList(int cardNumbers, Random rnd, Scanner sc){
+        this.rnd = rnd;
+        this.sc = sc;
+
         cards = new Card[cardNumbers];
         for (int i = 0; i < cardNumbers; i++) {
-            cards[i] = new Card('x', 'x');
+            cards[i] = new Card();
         }
     }
 
-        //----------METHODS----------//
+    CardList(int cardNumbers){
+        cards = new Card[cardNumbers];
+        for (int i = 0; i < cardNumbers; i++) {
+            cards[i] = new Card();
+        }
+    }
+
+
+    //----------METHODS----------//
     public void printDeck(){
         System.out.print("Table Deck ▶ ");
         System.out.println("\t\t\t\t\t" +cards[lastIndex-1].getType() + "" + cards[lastIndex-1].getNum());

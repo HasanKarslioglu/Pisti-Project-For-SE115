@@ -1,36 +1,48 @@
+import java.util.Scanner;
+import java.util.Random;
+
 public class Main {
 
-    static Deck unDistributedDeck = new Deck(52);
-    static Deck tableDeck = new Deck(52);
+    //Scanner and random object produced one times for the game
+    static Scanner sc = new Scanner(System.in);
+    static Random rnd = new Random(System.currentTimeMillis());
+
+
+    static CardList unDistributedCardList = new CardList(52, rnd, sc);
+    static CardList tableCards = new CardList(52, rnd, sc);
     static Player user = new Player("Hasan");
     static Player computer = new Player("Computer");
-    static GameMode gamemode = new GameMode(unDistributedDeck, tableDeck, user, computer);
+    static GameMode gamemode = new GameMode(unDistributedCardList, tableCards, user, computer);
 
     public static void startGame(){
 
-        unDistributedDeck.fillDeck();
-        unDistributedDeck.shuffleDeck();
-        gamemode.dealCards();
-        gamemode.printRound();
-
-        //unDistributedDeck.cutDeck();
-        /*
-        //Asking UserName
+        //Asking and setting UserName
         System.out.println("Please Enter Your Name");
-        Scanner sc = new Scanner(System.in);
         String name = sc.nextLine();
         user.setName(name);
 
+        unDistributedCardList.fillDeck();
+        unDistributedCardList.shuffleDeck();
+        unDistributedCardList.cutDeck();
+
+        gamemode.dealCards();
+        gamemode.printRound();
+
         //Setting ComputerName
         computer.setName("Computer");
-        */
-
-        //Asking cut.
     }
 
+    public static void loopGame(){
+
+    }
+
+    public static void endGame(){
+
+    }
     public static void main(String[] args) {
         startGame();
-
+        loopGame();
+        endGame();
     }
 }
 
