@@ -24,10 +24,14 @@ public class GameMode {
 
         //Printing computer hand
         computer.printHand();
+
         System.out.println("---------------------------------------------------------------------\n");
+
         //Printing table deck
         tableCardList.printDeck();
+
         System.out.println("\n---------------------------------------------------------------------");
+
         //Printing user hand
         user.printHand();
 
@@ -37,13 +41,14 @@ public class GameMode {
 
     public void dealCards(){
         //If roundCount is 0, it means its first dealing. That's why, we have to deal to tableDeck too
-        if (roundCount == 0){
+        if (roundCount == 1){
             for (int i = 0; i < 4; i++) {
                 tableCardList.addCard(unDistributedCardList.removeCard());
                 user.getHandCards().addCard(unDistributedCardList.removeCard());
                 computer.getHandCards().addCard(unDistributedCardList.removeCard());
             }
         }
+
         //If roundCount is 1, it means its not first dealing. That's why,
         // we have to deal to just user and computer not tableDeck
         else {
@@ -54,10 +59,9 @@ public class GameMode {
         }
     }
 
-
         //----------GETTERS----------//
     public int getRoundCount(){return roundCount;}
 
         //----------SETTERS----------//
-    public void setRoundCount(int roundCount){this.roundCount = roundCount;}
+    public void updateRoundCound(){this.roundCount += 1;}
 }

@@ -10,7 +10,9 @@ public class CardList {
     Random rnd;
     Scanner sc;
     private Card[] cards;
-    private int lastIndex = 0;
+    private int lastIndex = -1;
+
+    private boolean isUserCuttedDeck = false;
 
         //----------CONSTRUCTOR----------//
     CardList(int cardNumbers, Random rnd, Scanner sc){
@@ -34,9 +36,9 @@ public class CardList {
     //----------METHODS----------//
     public void printDeck(){
         System.out.print("Table Deck ▶ ");
-        System.out.println("\t\t\t\t\t" +cards[lastIndex-1].getType() + "" + cards[lastIndex-1].getNum());
+        System.out.println("\t\t\t\t\t" +cards[lastIndex].getType() + "" + cards[lastIndex].getNum());
         System.out.print("\t\t\t\t\t\t\t ");
-        for (int i = 0; i < (lastIndex - 1); i++) {
+        for (int i = 0; i < (lastIndex); i++) {
             System.out.print(cards[i].getType() + "" + cards[i].getNum() + " ");
         }
         System.out.println();
@@ -79,6 +81,7 @@ public class CardList {
         while (!(choose == 0 || choose == 1)){
             System.out.println("Please enter invalid number (Enter 1 or 0)");
             choose = sc.nextInt();
+            isUserCuttedDeck = (choose == 1);
         }
 
         //if choose is 0, it means computer will choose a number for cutting
@@ -125,8 +128,8 @@ public class CardList {
 
     public void addCard(Card newCard){
         //Add card to cards array
-        cards[lastIndex] = newCard;
         lastIndex++;
+        cards[lastIndex] = newCard;
     }
 
     public Card removeCard(int index){
@@ -134,6 +137,7 @@ public class CardList {
         Card temp = cards[index];
         //Add empty card instead of removed card
         cards[index] = new Card();
+        lastIndex--;
         return temp;
     }
 
@@ -148,6 +152,7 @@ public class CardList {
 
     //--------GETTERS---------//
     public int getLastIndex(){return lastIndex;}
+    public boolean getIsUserCuttedDeck() {return isUserCuttedDeck;}
     public Card getCard(int index){return cards[index];}
 }
 
