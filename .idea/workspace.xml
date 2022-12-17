@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8e43613a-632a-4249-9e90-b2db72214b37" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CardList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CardList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameMode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
@@ -28,6 +29,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2IS6TnbTGgfvDN3glNJLLLTYaEH" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />

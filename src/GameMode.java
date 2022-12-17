@@ -1,7 +1,7 @@
 public class GameMode {
 
 
-    //------DEFINATIONS---------//
+    //------DEFINITIONS---------//
     private int roundCount = 0;
     private CardList unDistributedCardList;
     private CardList tableCardList;
@@ -19,41 +19,53 @@ public class GameMode {
 
         //--------------METHODS--------------//
     public void printRound(){
+
+        //Printing round count and games border
         System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  Round "+ roundCount +"  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
-
-        //Printing computer hand
+        //Printing ----COMPUTER HAND----
         computer.printHand();
-
         System.out.println("---------------------------------------------------------------------\n");
 
-        //Printing table deck
-        tableCardList.printDeck();
+        //Printing ----TABLE----
+        System.out.print("Table Deck ▶ ");
+        System.out.print("\t\t\t\t\t" +tableCardList.getCard(tableCardList.getLastIndex()).getType());
+        System.out.println(tableCardList.getCard(tableCardList.getLastIndex()).getNum());
+        System.out.print("\t\t\t\t\t\t\t ");
+        for (int i = 0; i < (tableCardList.getLastIndex()); i++) {
+            System.out.print(tableCardList.getCard(i).getType());
+            System.out.print(tableCardList.getCard(i).getNum() + " ");
+        }
 
-        System.out.println("\n---------------------------------------------------------------------");
-
-        //Printing user hand
+        //Printing ----USER HAND----
+        System.out.println("\n\n---------------------------------------------------------------------");
         user.printHand();
 
-
+        //Printing games border
         System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
     }
 
     public void dealCards(){
-        //If roundCount is 0, it means its first dealing. That's why, we have to deal to tableDeck too
+        //If roundCount is 1, it means we are in the first dealing. That's why, we have to deal to tableDeck too.
         if (roundCount == 1){
             for (int i = 0; i < 4; i++) {
+                //Dealing for table.
                 tableCardList.addCard(unDistributedCardList.removeCard());
+                //Dealing for user.
                 user.getHandCards().addCard(unDistributedCardList.removeCard());
+                //Dealing for computer.
                 computer.getHandCards().addCard(unDistributedCardList.removeCard());
             }
         }
 
-        //If roundCount is 1, it means its not first dealing. That's why,
-        // we have to deal to just user and computer not tableDeck
+        //If roundCount is greater than 1, it means its not first dealing. That's why,
+        //we have to deal to just user and computer. Not tableDeck.
         else {
             for (int i = 0; i < 4; i++) {
+                //Dealing for user.
                 user.getHandCards().addCard(unDistributedCardList.removeCard());
+                //Dealing for computer.
                 computer.getHandCards().addCard(unDistributedCardList.removeCard());
             }
         }
@@ -63,5 +75,6 @@ public class GameMode {
     public int getRoundCount(){return roundCount;}
 
         //----------SETTERS----------//
-    public void updateRoundCound(){this.roundCount += 1;}
+    public void updateRoundCount(){this.roundCount += 1;}
 }
+

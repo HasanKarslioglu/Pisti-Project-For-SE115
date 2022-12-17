@@ -34,12 +34,12 @@ public class Main {
 
         while (gamemode.getRoundCount() < 6){
 
-            gamemode.updateRoundCound();
+            gamemode.updateRoundCount();
             gamemode.dealCards();
             gamemode.printRound();
 
             for (int i = 0; i < 4; i++) {
-                if (unDistributedCardList.getIsUserCuttedDeck()) {
+                if (unDistributedCardList.getIsUserCutDeck()) {
                     computer.playCard();
                     user.playCard();
                 }else {

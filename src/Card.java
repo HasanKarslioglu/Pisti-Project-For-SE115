@@ -1,12 +1,12 @@
 public class Card {
 
-        //------DEFINATIONS---------//
+        //------DEFINITIONS---------//
     private char num;
     private char type;
 
         //----------CONSTRUCTORS----------//
 
-    //That constructors sets null card
+    //That constructor sets null card
     Card(){
         num = 'x';
         type = 'x';
