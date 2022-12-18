@@ -1,3 +1,4 @@
+import java.nio.file.StandardWatchEventKinds;
 import java.util.Scanner;
 
 public class Player {
@@ -14,7 +15,7 @@ public class Player {
     private CardList handCards = new CardList(4);
 
     //Collected cards by player's
-    public CardList collectedCards = new CardList(52);
+    private CardList collectedCards = new CardList(52);
 
     //We will take a reference of scanner object from Main class
     //by using constructor instead of making a new one.
@@ -71,6 +72,9 @@ public class Player {
 
     private void computerPlayCard(){
         tableCards.addCard(handCards.removeCard());
+
+        if (tableCards.canCollectAllCard())
+            tableCards.takeAllCards(this);
     }
     private void userPlayCard(){
         //Choose is variable for user's chose card to play.
@@ -87,9 +91,15 @@ public class Player {
         }
         //User will play card to table.
         tableCards.addCard(handCards.removeCard(choose-1));
+
+
+        if (tableCards.canCollectAllCard())
+            tableCards.takeAllCards(this);
+
     }
 
         //--------SETTERS---------//
     public void setName(String name){this.name = name;}
     public CardList getHandCards() {return handCards;}
+    public CardList getCollectedCards() {return collectedCards;}
 }

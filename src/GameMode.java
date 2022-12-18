@@ -29,13 +29,16 @@ public class GameMode {
 
         //Printing ----TABLE----
         System.out.print("Table Deck ▶ ");
-        System.out.print("\t\t\t\t\t" +tableCardList.getCard(tableCardList.getLastIndex()).getType());
-        System.out.println(tableCardList.getCard(tableCardList.getLastIndex()).getNum());
-        System.out.print("\t\t\t\t\t\t\t ");
-        for (int i = 0; i < (tableCardList.getLastIndex()); i++) {
-            System.out.print(tableCardList.getCard(i).getType());
-            System.out.print(tableCardList.getCard(i).getNum() + " ");
-        }
+        if(tableCardList.getLastIndex() != 0){
+            System.out.print("\t\t\t\t\t" +tableCardList.getCard(tableCardList.getLastIndex()).getType());
+            System.out.println(tableCardList.getCard(tableCardList.getLastIndex()).getNum());
+            System.out.print("\t\t\t\t\t\t\t ");
+            for (int i = 0; i < (tableCardList.getLastIndex()); i++) {
+                System.out.print(tableCardList.getCard(i).getType());
+                System.out.print(tableCardList.getCard(i).getNum() + " ");
+            }
+        }else
+            System.out.println("");
 
         //Printing ----USER HAND----
         System.out.println("\n\n---------------------------------------------------------------------");
@@ -43,6 +46,28 @@ public class GameMode {
 
         //Printing games border
         System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
+        int x = 0;
+        System.out.println("---------------------User----------------------");
+        for (int j = 0; j < 4; j++) {
+            for (int k = 0; k < 13; k++) {
+                System.out.print(user.getCollectedCards().getCard(x).getType());
+                System.out.print(user.getCollectedCards().getCard(x).getNum() + " ");
+                x++;
+            }
+            System.out.println("");
+        }
+        System.out.println("---------------------Conputer----------------------");
+
+        x = 0;
+        for (int j = 0; j < 4; j++) {
+            for (int k = 0; k < 13; k++) {
+                System.out.print(computer.getCollectedCards().getCard(x).getType());
+                System.out.print(computer.getCollectedCards().getCard(x).getNum() + " ");
+                x++;
+            }
+            System.out.println("");
+        }
 
     }
 

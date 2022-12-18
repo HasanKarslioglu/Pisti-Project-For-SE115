@@ -131,6 +131,21 @@ public class CardList {
         }
     }
 
+    public boolean canCollectAllCard(){
+        if (lastIndex > 0){
+            if(cards[lastIndex].getNum() == 'J') return true;
+            if(cards[lastIndex].getNum() == cards[lastIndex - 1].getNum()) return true;
+        }
+        return false;
+    }
+
+    public void takeAllCards(Player player){
+        int forLoopTime = lastIndex;
+        for (int i = 0; i <= forLoopTime; i++) {
+            player.getCollectedCards().addCard(removeCard());
+        }
+    }
+
     public void addCard(Card newCard){
         //Add card to cards array
         lastIndex++;
@@ -158,7 +173,10 @@ public class CardList {
     //--------GETTERS---------//
     public int getLastIndex(){return lastIndex;}
     public boolean getIsUserCutDeck() {return isUserCutDeck;}
-    public Card getCard(int index){return cards[index];}
+    public Card getCard(int index){
+        if (index < 0) index = 0;
+        return cards[index];
+    }
 }
 
 

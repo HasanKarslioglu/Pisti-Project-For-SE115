@@ -4,15 +4,15 @@ import java.util.Random;
 public class Main {
 
     //Scanner and random object produced one times for the game
-    static Scanner sc = new Scanner(System.in);
-    static Random rnd = new Random(System.currentTimeMillis());
+    private static Scanner sc = new Scanner(System.in);
+    private static Random rnd = new Random(System.currentTimeMillis());
 
 
-    static CardList unDistributedCardList = new CardList(52, rnd, sc);
-    static CardList tableCards = new CardList(52, rnd, sc);
-    static Player user = new Player("Hasan", tableCards, sc);
-    static Player computer = new Player("Computer", tableCards, sc);
-    static GameMode gamemode = new GameMode(unDistributedCardList, tableCards, user, computer);
+    private static CardList unDistributedCardList = new CardList(52, rnd, sc);
+    private static CardList tableCards = new CardList(52, rnd, sc);
+    private static Player user = new Player("Hasan", tableCards, sc);
+    private static Player computer = new Player("Computer", tableCards, sc);
+    private static GameMode gamemode = new GameMode(unDistributedCardList, tableCards, user, computer);
 
     public static void startGame(){
 
@@ -47,6 +47,7 @@ public class Main {
                     computer.playCard();
                 }
                 gamemode.printRound();
+
             }
         }
     }
