@@ -74,7 +74,7 @@ public class CardList {
     public void cutDeck(){
 
         //Asking -> Will the user want to cut it or will the computer cut it?
-        System.out.println("Do you want to cut it? please enter 1->Yes, 0->No");
+        System.out.println("Do you want to cut it? Please enter 1->Yes, 0->No");
         int choose;
         //Looping that ask user again, until user enter valid number
         while (true){
@@ -82,6 +82,7 @@ public class CardList {
             if(choose == 0 || choose == 1) break;
             System.out.println("Please enter invalid number (Enter 1 or 0)");
         }
+
         //Right sight of equation shows us if it is 1 it means user want to cut
         //Because of that, it will return true
         isUserCutDeck = (choose == 1);
@@ -92,7 +93,7 @@ public class CardList {
         //if choose is 0, it means computer will choose a number for cutting
         if (choose == 0){
              cutIndex = rnd.nextInt(51) + 1;
-            System.out.println("Computer chose " + cutIndex + " for cutting.");
+            System.out.println("\nComputer chose " + cutIndex + " for cutting.");
         //if choose is 1, it means user will choose a number for cutting
         }else {
             System.out.println("Enter a number for where you want to cut deck");
@@ -102,6 +103,7 @@ public class CardList {
                 System.out.println("Please enter invalid number (Between 1 and 51)");
                 cutIndex = sc.nextInt();
             }
+            System.out.println("\nYou chose " + cutIndex + " for cutting.");
         }
 
         //Making empty Card array it going to be filled from old array
@@ -144,6 +146,8 @@ public class CardList {
         for (int i = 0; i <= forLoopTime; i++) {
             player.getCollectedCards().addCard(removeCard());
         }
+        System.out.println(player.getName() + " took all cards.");
+
     }
 
     public void addCard(Card newCard){
@@ -172,7 +176,7 @@ public class CardList {
 
     //--------GETTERS---------//
     public int getLastIndex(){return lastIndex;}
-    public boolean getIsUserCutDeck() {return isUserCutDeck;}
+    public boolean getWasUserCutDeck() {return isUserCutDeck;}
     public Card getCard(int index){
         if (index < 0) index = 0;
         return cards[index];

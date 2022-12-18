@@ -7,6 +7,7 @@ public class Player {
 
     //Users score
     private int score = 0;
+    private static boolean userCollectedLastly = false;
 
     //Users name
     private String name;
@@ -63,18 +64,25 @@ public class Player {
     }
 
     public void playCard(){
-        //PlayCard method have been used just for determine who call playCard method (User? or Computer)
+        //PlayCard method have been used just for determine who call playCard method (User? or Computer?)
         if (name.equals("Computer"))
             computerPlayCard();
         else
             userPlayCard();
+
+        System.out.println("\n-----------------------------------------------------------------------");
     }
 
     private void computerPlayCard(){
         tableCards.addCard(handCards.removeCard());
 
-        if (tableCards.canCollectAllCard())
+        System.out.print("Computer played -> " + tableCards.getCard(tableCards.getLastIndex()).getType());
+        System.out.println(tableCards.getCard(tableCards.getLastIndex()).getNum());
+
+        if (tableCards.canCollectAllCard()){
             tableCards.takeAllCards(this);
+            userCollectedLastly = false;
+        }
     }
     private void userPlayCard(){
         //Choose is variable for user's chose card to play.
@@ -92,14 +100,21 @@ public class Player {
         //User will play card to table.
         tableCards.addCard(handCards.removeCard(choose-1));
 
+        System.out.print("You played -> " + tableCards.getCard(tableCards.getLastIndex()).getType());
+        System.out.println(tableCards.getCard(tableCards.getLastIndex()).getNum());
 
-        if (tableCards.canCollectAllCard())
+        if (tableCards.canCollectAllCard()){
             tableCards.takeAllCards(this);
-
+            userCollectedLastly = true;
+        }
     }
 
         //--------SETTERS---------//
     public void setName(String name){this.name = name;}
+
+        //--------GETTERS---------//
     public CardList getHandCards() {return handCards;}
     public CardList getCollectedCards() {return collectedCards;}
+    public String getName(){return name;}
+    public boolean getUserCollectedLastly(){return userCollectedLastly;}
 }

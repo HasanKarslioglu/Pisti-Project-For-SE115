@@ -1,8 +1,11 @@
+import java.sql.SQLOutput;
+
 public class GameMode {
 
 
     //------DEFINITIONS---------//
     private int roundCount = 0;
+    private int eachRoundStep = 1;
     private CardList unDistributedCardList;
     private CardList tableCardList;
     private Player computer;
@@ -21,15 +24,16 @@ public class GameMode {
     public void printRound(){
 
         //Printing round count and games border
-        System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  Round "+ roundCount +"  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+        System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬ Round "+ roundCount +" ▬▬▬ Step "+ eachRoundStep +" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
         //Printing ----COMPUTER HAND----
         computer.printHand();
-        System.out.println("---------------------------------------------------------------------\n");
+        System.out.println("");
 
         //Printing ----TABLE----
         System.out.print("Table Deck ▶ ");
-        if(tableCardList.getLastIndex() != 0){
+        if (tableCardList.getCard(0).getType() != 'x')
+        {
             System.out.print("\t\t\t\t\t" +tableCardList.getCard(tableCardList.getLastIndex()).getType());
             System.out.println(tableCardList.getCard(tableCardList.getLastIndex()).getNum());
             System.out.print("\t\t\t\t\t\t\t ");
@@ -37,38 +41,29 @@ public class GameMode {
                 System.out.print(tableCardList.getCard(i).getType());
                 System.out.print(tableCardList.getCard(i).getNum() + " ");
             }
-        }else
-            System.out.println("");
+        }
 
         //Printing ----USER HAND----
-        System.out.println("\n\n---------------------------------------------------------------------");
+        System.out.println("\n");
         user.printHand();
 
         //Printing games border
         System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
-        int x = 0;
-        System.out.println("---------------------User----------------------");
-        for (int j = 0; j < 4; j++) {
-            for (int k = 0; k < 13; k++) {
-                System.out.print(user.getCollectedCards().getCard(x).getType());
-                System.out.print(user.getCollectedCards().getCard(x).getNum() + " ");
-                x++;
-            }
-            System.out.println("");
-        }
-        System.out.println("---------------------Conputer----------------------");
+    }
 
-        x = 0;
-        for (int j = 0; j < 4; j++) {
-            for (int k = 0; k < 13; k++) {
-                System.out.print(computer.getCollectedCards().getCard(x).getType());
-                System.out.print(computer.getCollectedCards().getCard(x).getNum() + " ");
-                x++;
-            }
-            System.out.println("");
-        }
+    public void printEndGameStats(){
+        System.out.println("\nYour collected cards -> ");
 
+        for (int i = 0; i <= user.getCollectedCards().getLastIndex(); i++) {
+            System.out.print(user.getCollectedCards().getCard(i).getType());
+            System.out.print(user.getCollectedCards().getCard(i).getNum() + " ");
+        }
+        System.out.println("\n\nComputer collected cards -> ");
+        for (int i = 0; i <= computer.getCollectedCards().getLastIndex(); i++) {
+            System.out.print(computer.getCollectedCards().getCard(i).getType());
+            System.out.print(computer.getCollectedCards().getCard(i).getNum() + " ");
+        }
     }
 
     public void dealCards(){
@@ -94,12 +89,37 @@ public class GameMode {
                 computer.getHandCards().addCard(unDistributedCardList.removeCard());
             }
         }
+        System.out.println("Cards dealt");
+    }
+
+    public void takeLeftBehindOnTable(){
+        if (user.getUserCollectedLastly()){
+            System.out.print("You collected lastly. That's why, ");
+            for (int i = 0; i <= tableCardList.getLastIndex(); i++) {
+                System.out.print(computer.getCollectedCards().getCard(i).getType());
+                System.out.print(computer.getCollectedCards().getCard(i).getNum() + " ");
+            }
+            System.out.println("will be yours.");
+            tableCardList.takeAllCards(user);
+        }
+        else{
+            System.out.print("Computer collected lastly. That's why, ");
+            for (int i = 0; i <= tableCardList.getLastIndex(); i++) {
+                System.out.print(computer.getCollectedCards().getCard(i).getType());
+                System.out.print(computer.getCollectedCards().getCard(i).getNum() + " ");
+            }
+            System.out.println("will be computer's.");
+            tableCardList.takeAllCards(computer);
+        }
     }
 
         //----------GETTERS----------//
     public int getRoundCount(){return roundCount;}
 
         //----------SETTERS----------//
-    public void updateRoundCount(){this.roundCount += 1;}
+    public void updateRoundCount(){roundCount += 1;}
+    public void updateRoundStep(){eachRoundStep += 1;}
+    public void clearRoundStep(){eachRoundStep = 1;}
+
 }
 

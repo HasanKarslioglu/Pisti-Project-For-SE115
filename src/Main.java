@@ -17,17 +17,16 @@ public class Main {
     public static void startGame(){
 
         //Asking and setting UserName
-        //System.out.println("Please Enter Your Name");
-        //String name = sc.nextLine();
-        //user.setName(name);
-
-        unDistributedCardList.fillDeck();
-        unDistributedCardList.shuffleDeck();
-        //unDistributedCardList.cutDeck();
-
+        System.out.println("Please enter your name.");
+        String name = sc.nextLine();
+        user.setName(name);
 
         //Setting ComputerName
         computer.setName("Computer");
+
+        unDistributedCardList.fillDeck();
+        unDistributedCardList.shuffleDeck();
+        unDistributedCardList.cutDeck();
     }
 
     public static void loopGame(){
@@ -35,25 +34,34 @@ public class Main {
         while (gamemode.getRoundCount() < 6){
 
             gamemode.updateRoundCount();
+            gamemode.clearRoundStep();
             gamemode.dealCards();
             gamemode.printRound();
 
             for (int i = 0; i < 4; i++) {
-                if (unDistributedCardList.getIsUserCutDeck()) {
+                if (unDistributedCardList.getWasUserCutDeck()) {
                     computer.playCard();
+                    gamemode.updateRoundStep();
+                    gamemode.printRound();
                     user.playCard();
                 }else {
                     user.playCard();
+                    gamemode.updateRoundStep();
+                    gamemode.printRound();
                     computer.playCard();
                 }
+                gamemode.updateRoundStep();
                 gamemode.printRound();
-
             }
         }
     }
 
     public static void endGame(){
+        System.out.println("\n\n\nHere is the end of the game!!!");
+        System.out.println("--------------------------------------------------------------------------------");
 
+        gamemode.takeLeftBehindOnTable();
+        gamemode.printEndGameStats();
     }
     public static void main(String[] args) {
         startGame();
