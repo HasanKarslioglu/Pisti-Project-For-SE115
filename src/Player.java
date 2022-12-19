@@ -1,4 +1,3 @@
-import java.nio.file.StandardWatchEventKinds;
 import java.util.Scanner;
 
 public class Player {
@@ -7,6 +6,7 @@ public class Player {
 
     //Users score
     private int score = 0;
+    private int pistiCount = 0;
     private static boolean userCollectedLastly = false;
 
     //Users name
@@ -70,19 +70,7 @@ public class Player {
         else
             userPlayCard();
 
-        System.out.println("\n-----------------------------------------------------------------------");
-    }
-
-    private void computerPlayCard(){
-        tableCards.addCard(handCards.removeCard());
-
-        System.out.print("Computer played -> " + tableCards.getCard(tableCards.getLastIndex()).getType());
-        System.out.println(tableCards.getCard(tableCards.getLastIndex()).getNum());
-
-        if (tableCards.canCollectAllCard()){
-            tableCards.takeAllCards(this);
-            userCollectedLastly = false;
-        }
+        System.out.println("\n");
     }
     private void userPlayCard(){
         //Choose is variable for user's chose card to play.
@@ -109,12 +97,56 @@ public class Player {
         }
     }
 
+    private void computerPlayCard(){
+
+        if (tableCards.getLastCard().getNum() != 'x' && doIHaveMatchedCard() != -1)
+            tableCards.addCard(handCards.removeCard(doIHaveMatchedCard()));
+        else if (tableCards.getLastCard().getNum() != 'x' && doIHaveJoker() != -1)
+            tableCards.addCard(handCards.removeCard(doIHaveJoker()));
+        else {
+            for (int i = 0; i < 4; i++) {
+                if (handCards.getCard(i).getNum() != 'x'){
+                    tableCards.addCard(handCards.removeCard(i));
+                    break;
+                }
+            }
+        }
+
+        System.out.print("Computer played -> " + tableCards.getCard(tableCards.getLastIndex()).getType());
+        System.out.println(tableCards.getCard(tableCards.getLastIndex()).getNum());
+
+        if (tableCards.canCollectAllCard()){
+            tableCards.takeAllCards(this);
+            userCollectedLastly = false;
+        }
+    }
+    private int doIHaveMatchedCard(){
+        for (int i = 0; i < 4; i++) {
+            if (tableCards.getLastCard().getNum() == handCards.getCard(i).getNum())
+                return i;
+        }
+        return -1;
+    }
+    private int doIHaveJoker(){
+        for (int i = 0; i < 4; i++) {
+            if (handCards.getCard(i).getNum() == 'J') return i;
+        }
+        return -1;
+    }
+
         //--------SETTERS---------//
     public void setName(String name){this.name = name;}
+    public void addScore(int score){this.score += score;}
+    public void incrementPistiCount() {
+        pistiCount++;
+        System.out.println(name + " maked pisti.");
+    }
 
-        //--------GETTERS---------//
+    //--------GETTERS---------//
     public CardList getHandCards() {return handCards;}
     public CardList getCollectedCards() {return collectedCards;}
     public String getName(){return name;}
+    public int getScore(){return score;}
     public boolean getUserCollectedLastly(){return userCollectedLastly;}
+    public int getPistiCount(){return pistiCount;}
 }

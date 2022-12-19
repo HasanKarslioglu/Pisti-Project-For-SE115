@@ -106,7 +106,7 @@ public class CardList {
             System.out.println("\nYou chose " + cutIndex + " for cutting.");
         }
 
-        //Making empty Card array it going to be filled from old array
+        //Making empty Card array. It going to be filled from old array
         //First make new empty array look like ( , , , , , )
         Card[] tempCardArr = new Card[cards.length];
         //For ex if my array is looks like (2,3,6,0,8,5,7) and choseNumber is 3
@@ -142,6 +142,8 @@ public class CardList {
     }
 
     public void takeAllCards(Player player){
+        if (lastIndex == 1) player.incrementPistiCount();
+
         int forLoopTime = lastIndex;
         for (int i = 0; i <= forLoopTime; i++) {
             player.getCollectedCards().addCard(removeCard());
@@ -177,6 +179,11 @@ public class CardList {
     //--------GETTERS---------//
     public int getLastIndex(){return lastIndex;}
     public boolean getWasUserCutDeck() {return isUserCutDeck;}
+    public Card getLastCard(){
+        if (lastIndex < 0) return cards[0];
+        return cards[lastIndex];
+    }
+
     public Card getCard(int index){
         if (index < 0) index = 0;
         return cards[index];

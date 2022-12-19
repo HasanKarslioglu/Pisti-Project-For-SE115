@@ -62,6 +62,15 @@ public class Main {
 
         gamemode.takeLeftBehindOnTable();
         gamemode.printEndGameStats();
+
+        gamemode.calculatePlayerScore(user);
+        gamemode.calculatePlayerScore(computer);
+        gamemode.addScoreWhoseCardIsMore();
+        System.out.println("--------------------------------------------------------------------------------");
+        System.out.println("Your Score = " + user.getScore());
+        System.out.println("Computer Score = " + computer.getScore());
+
+
     }
     public static void main(String[] args) {
         startGame();

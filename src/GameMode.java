@@ -1,7 +1,6 @@
-import java.sql.SQLOutput;
+import org.w3c.dom.ls.LSOutput;
 
 public class GameMode {
-
 
     //------DEFINITIONS---------//
     private int roundCount = 0;
@@ -24,7 +23,7 @@ public class GameMode {
     public void printRound(){
 
         //Printing round count and games border
-        System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬ Round "+ roundCount +" ▬▬▬ Step "+ eachRoundStep +" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+        System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬ Round "+ roundCount +" --- Step "+ eachRoundStep +" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
         //Printing ----COMPUTER HAND----
         computer.printHand();
@@ -59,13 +58,14 @@ public class GameMode {
             System.out.print(user.getCollectedCards().getCard(i).getType());
             System.out.print(user.getCollectedCards().getCard(i).getNum() + " ");
         }
-        System.out.println("\n\nComputer collected cards -> ");
+        System.out.println("\nYour pisti's count: " + user.getPistiCount());
+        System.out.println("\nComputer collected cards -> ");
         for (int i = 0; i <= computer.getCollectedCards().getLastIndex(); i++) {
             System.out.print(computer.getCollectedCards().getCard(i).getType());
             System.out.print(computer.getCollectedCards().getCard(i).getNum() + " ");
         }
+        System.out.println("\nComputer pisti's count: " + computer.getPistiCount());
     }
-
     public void dealCards(){
         //If roundCount is 1, it means we are in the first dealing. That's why, we have to deal to tableDeck too.
         if (roundCount == 1){
@@ -89,15 +89,15 @@ public class GameMode {
                 computer.getHandCards().addCard(unDistributedCardList.removeCard());
             }
         }
-        System.out.println("Cards dealt");
+        System.out.println("Cards dealt.");
     }
 
     public void takeLeftBehindOnTable(){
         if (user.getUserCollectedLastly()){
             System.out.print("You collected lastly. That's why, ");
             for (int i = 0; i <= tableCardList.getLastIndex(); i++) {
-                System.out.print(computer.getCollectedCards().getCard(i).getType());
-                System.out.print(computer.getCollectedCards().getCard(i).getNum() + " ");
+                System.out.print(tableCardList.getCard(i).getType());
+                System.out.print(tableCardList.getCard(i).getNum() + " ");
             }
             System.out.println("will be yours.");
             tableCardList.takeAllCards(user);
@@ -105,12 +105,43 @@ public class GameMode {
         else{
             System.out.print("Computer collected lastly. That's why, ");
             for (int i = 0; i <= tableCardList.getLastIndex(); i++) {
-                System.out.print(computer.getCollectedCards().getCard(i).getType());
-                System.out.print(computer.getCollectedCards().getCard(i).getNum() + " ");
+                System.out.print(tableCardList.getCard(i).getType());
+                System.out.print(tableCardList.getCard(i).getNum() + " ");
             }
             System.out.println("will be computer's.");
             tableCardList.takeAllCards(computer);
         }
+    }
+
+    public void calculatePlayerScore(Player player){
+
+        player.addScore(player.getCollectedCards().getLastIndex()+1);
+        player.addScore(player.getPistiCount() * 8);
+
+        if (doesHaveDiamonds10(player.getCollectedCards())){
+            player.addScore(2);
+        }
+        if (doesHaveClubs2(player.getCollectedCards())){
+            player.addScore(1);
+        }
+    }
+    private boolean doesHaveDiamonds10(CardList cards){
+        for (int i = 0; i <= cards.getLastIndex(); i++) {
+            if (cards.getCard(i).getNum() == '0' && cards.getCard(i).getType() == '♦') return true;
+        }
+        return false;
+    }
+    private boolean doesHaveClubs2(CardList cards){
+        for (int i = 0; i <= cards.getLastIndex(); i++) {
+            if (cards.getCard(i).getNum() == '2' && cards.getCard(i).getType() == '♣') return true;
+        }
+        return false;
+    }
+    public void addScoreWhoseCardIsMore(){
+        if (user.getCollectedCards().getLastIndex() > computer.getCollectedCards().getLastIndex())
+            user.addScore(3);
+        else if (user.getCollectedCards().getLastIndex() < computer.getCollectedCards().getLastIndex())
+            computer.addScore(3);
     }
 
         //----------GETTERS----------//
