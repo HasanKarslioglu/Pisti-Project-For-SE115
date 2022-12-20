@@ -26,8 +26,7 @@ public class Player {
     //Constructor is going to fill tableCards variable.
     private CardList tableCards;
 
-    Player(String name, CardList tableCards, Scanner sc){
-        this.name = name;
+    Player(CardList tableCards, Scanner sc){
         this.tableCards = tableCards;
         this.sc = sc;
     }
