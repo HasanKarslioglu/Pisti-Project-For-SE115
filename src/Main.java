@@ -31,6 +31,8 @@ public class Main {
                     //--------------FUNCTIONS--------------//
     public static void startGame(){
 
+        System.out.println("Please follow the game step by step!!");
+
         //Asking UserName.
         System.out.println("Please enter your name.");
         String name = sc.nextLine();

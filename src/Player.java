@@ -74,18 +74,26 @@ public class Player {
         System.out.println("\n");
     }
     private void userPlayCard(){
+
         //Choose is variable for user's chose card to play.
         int choose;
         System.out.println("Please Enter A Number To Play");
 
         //But we have to make sure user have entered valid number.
         while(true){
-            choose = sc.nextInt();
-
+            String input = sc.nextLine().trim();
+            try{
+                choose = Integer.parseInt(input);
+            }catch (Exception e){
+                System.out.println("You have entered the invalid number(1-4)!");
+                continue;
+            }
             //Following if block checks if it is between 1-4 and also checks card is not empty.
             if (choose <= 4 && choose >= 1 && handCards.getCard(choose-1).getType() != 'x') break;
-            System.out.println("Please enter valid number (Between 1-4)");
+
+            System.out.println("You have entered the invalid number(1-4)!");
         }
+
         //User will play card to table.
         tableCards.addCard(handCards.removeCard(choose-1));
 

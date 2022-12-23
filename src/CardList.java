@@ -73,37 +73,47 @@ public class CardList {
 
     public void cutDeck(){
 
-        //Asking -> Will the user want to cut it or will the computer cut it?
-        System.out.println("Do you want to cut it? Please enter 1->Yes, 0->No");
-        int choose;
+        //Asking -> Will the user want to cut it or will the computer will cut it?
         //Looping that ask user again, until user enter valid number
-        while (true){
-            choose = sc.nextInt();
-            if(choose == 0 || choose == 1) break;
-            System.out.println("Please enter invalid number (Enter 1 or 0)");
+        int userChoose;
+        while(true){
+            System.out.println("Do you want to cut it? Please enter 1->Yes, 0->No");
+            String enteredNumberStr = sc.nextLine().trim();
+            try{
+                userChoose = Integer.parseInt(enteredNumberStr);
+            }catch (Exception e){
+                continue;
+            }
+            if (userChoose == 1 || userChoose == 0){
+                //Right sight of equation shows us if it is 1 it means user want to cut
+                //Because of that, it will return true
+                isUserCutDeck = (userChoose == 1);
+                break;
+            }
+            System.out.println("You have entered the invalid number!");
         }
-
-        //Right sight of equation shows us if it is 1 it means user want to cut
-        //Because of that, it will return true
-        isUserCutDeck = (choose == 1);
 
         //choseNumber is a number for where to cut the deck
         int cutIndex;
 
-        //if choose is 0, it means computer will choose a number for cutting
-        if (choose == 0){
-             cutIndex = rnd.nextInt(51) + 1;
-            System.out.println("\nComputer chose " + cutIndex + " for cutting.");
-        //if choose is 1, it means user will choose a number for cutting
-        }else {
-            System.out.println("Enter a number for where you want to cut deck (1-51)");
-            cutIndex = sc.nextInt();
-            //Looping that ask user again, until user enter valid number
-            while (!(cutIndex > 0 && cutIndex < 52)){
-                System.out.println("Please enter invalid number (Between 1 and 51)");
-                cutIndex = sc.nextInt();
+        if (isUserCutDeck){
+            while(true){
+                System.out.println("Enter a number for where you want to cut deck (1-51)");
+                String input = sc.nextLine().trim();
+                try{
+                    userChoose = Integer.parseInt(input);
+                }catch (Exception e){
+                    continue;
+                }
+                if (userChoose > 1 && userChoose < 52) {
+                    cutIndex = userChoose;
+                    break;
+                }
+                System.out.println("You have entered the invalid number!");
             }
-            System.out.println("\nYou chose " + cutIndex + " for cutting.");
+        }else{
+            cutIndex = rnd.nextInt(51) + 1;
+            System.out.println("\nComputer chose " + cutIndex + " for cutting.");
         }
 
         //Making empty Card array. It going to be filled from old array
