@@ -96,7 +96,7 @@ public class CardList {
             System.out.println("\nComputer chose " + cutIndex + " for cutting.");
         //if choose is 1, it means user will choose a number for cutting
         }else {
-            System.out.println("Enter a number for where you want to cut deck");
+            System.out.println("Enter a number for where you want to cut deck (1-51)");
             cutIndex = sc.nextInt();
             //Looping that ask user again, until user enter valid number
             while (!(cutIndex > 0 && cutIndex < 52)){
@@ -134,6 +134,8 @@ public class CardList {
     }
 
     public boolean canCollectAllCard(){
+        //If board cards last index is joker it returns true.
+        //If board cards last 2 index's numbers is equal it returns true. Otherwise returns false.
         if (lastIndex > 0){
             if(cards[lastIndex].getNum() == 'J') return true;
             if(cards[lastIndex].getNum() == cards[lastIndex - 1].getNum()) return true;
@@ -142,9 +144,13 @@ public class CardList {
     }
 
     public void takeAllCards(Player player){
-        if (lastIndex == 1) player.incrementPistiCount();
+
+        //It checks if there is any pisti.
+        if (lastIndex == 1 && cards[0].getNum() == cards[1].getNum())
+            player.incrementPistiCount();
 
         int forLoopTime = lastIndex;
+        //It tooks all card to player's collected cards array.
         for (int i = 0; i <= forLoopTime; i++) {
             player.getCollectedCards().addCard(removeCard());
         }

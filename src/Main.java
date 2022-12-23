@@ -6,8 +6,9 @@ public class Main {
                         //--------------DEFINITIONS--------------//
     //Scanner and random object created once for the game.
     //Random class were seeded with current time of computer due to more randomization.
-    private static Scanner sc = new Scanner(System.in);
-    private static Random rnd = new Random(System.currentTimeMillis());
+    private static final Scanner sc = new Scanner(System.in);
+    private static final Random rnd = new Random(System.currentTimeMillis());
+
 
     //Undistributed deck were created with length of 52.
     private static CardList deck = new CardList(52, rnd, sc);
@@ -21,7 +22,7 @@ public class Main {
     private static Player computer = new Player(tableCards, sc);
 
 
-    //Gamemode were created. It is going to handle all stuff about how it works of game..
+    //GameMode were created. It is going to handle all stuff about how it works of game..
     //..such as printing round, dealing cards, calculating score and etc...
     private static GameMode gamemode = new GameMode(deck, tableCards, user, computer);
 
@@ -38,7 +39,6 @@ public class Main {
         //Setting ComputerName
         computer.setName("Computer");
 
-
         deck.fillDeck();            //Deck is going to be 'filled'.
         deck.shuffleDeck();         //Deck is going to be 'shuffled'.
         deck.cutDeck();             //Deck is going to be 'cut'. That method will ask..
@@ -50,24 +50,30 @@ public class Main {
         //LoopGame function will work until end of the game.
         while (gamemode.getRoundCount() < 6){
 
-            gamemode.updateRoundCount();
-            gamemode.clearRoundStep();
-            gamemode.dealCards();
-            gamemode.printRound();
+            gamemode.updateRoundCount();            //Updates round count.
+            gamemode.clearRoundStep();              //It clears round step count (For more information..
+                                                    //..go to eachRoundStep variable where on the GameMode class.)
 
+            gamemode.dealCards();                   //Dealing cards to players.
+                                                    //If it is first round, it deals table too.
+
+            gamemode.printRound();                  //Printing round.
+
+            //That for is root of game loop and each round players must plays 4 card.
+            //That's why, number of loop is 4.
             for (int i = 0; i < 4; i++) {
-                if (deck.getWasUserCutDeck()) {
-                    computer.playCard();
+                if (deck.getWasUserCutDeck()) {     //If block execute if user cut the deck.
+                    computer.playCard();            //Computer plays first.
                     gamemode.updateRoundStep();
                     gamemode.printRound();
-                    user.playCard();
-                }else {
-                    user.playCard();
+                    user.playCard();                //User plays second.
+                }else {                             //Else block execute if computer cut the deck
+                    user.playCard();                //User plays first
                     gamemode.updateRoundStep();
                     gamemode.printRound();
-                    computer.playCard();
+                    computer.playCard();            //Computer plays second.
                 }
-                gamemode.updateRoundStep();
+                gamemode.updateRoundStep();         //Updating round step
                 gamemode.printRound();
             }
         }
@@ -77,21 +83,21 @@ public class Main {
         System.out.println("\n\n\nHere is the end of the game!!!");
         System.out.println("--------------------------------------------------------------------------------");
 
-        gamemode.takeLeftBehindOnTable();
-        gamemode.printEndGameStats();
+        gamemode.takeRemainingCardsOnBoard();           //It takes remaining cards on the board.
+        gamemode.printEndGameStats();                   //It prints stats of the finished game.
+                                                        //Such as each player collected cards, number of pistis.
+        gamemode.calculatePlayerScore(user);            //It calculates player score.
+        gamemode.calculatePlayerScore(computer);        //It calculates computer score.
+        gamemode.addScoreWhoseCardIsMore();             //It adds 3 point to whose cards is more than others.
 
-        gamemode.calculatePlayerScore(user);
-        gamemode.calculatePlayerScore(computer);
-        gamemode.addScoreWhoseCardIsMore();
+        //Following lines prints players scores.
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("Your Score = " + user.getScore());
         System.out.println("Computer Score = " + computer.getScore());
 
-
     }
 
             //--------------MAIN FUNCTION--------------//
-
     //The program will execute this function firstly.
     public static void main(String[] args) {
         startGame();

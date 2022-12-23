@@ -1,19 +1,23 @@
-import org.w3c.dom.ls.LSOutput;
-
 public class GameMode {
 
-    //------DEFINITIONS---------//
+                //--------DEFINITIONS-----------//
     private int roundCount = 0;
     private int eachRoundStep = 1;
-    private CardList unDistributedCardList;
+
+    //We need to know reference of deck, tableCardList, computer and user.
+    //Then, we can add or remove card to what we want.
+    private CardList deck;
     private CardList tableCardList;
     private Player computer;
     private Player user;
 
 
         //--------------CONSTRUCTOR--------------//
-    GameMode(CardList unDistributedCardList, CardList tableCardList, Player user, Player computer){
-        this.unDistributedCardList = unDistributedCardList;
+    GameMode(CardList deck, CardList tableCardList, Player user, Player computer){
+        //Following lines stores references.
+        //REMINDING -> They are not copy of arrays. Thanks to that way if we..
+        //..change anything on the array the original one will change.
+        this.deck = deck;
         this.tableCardList = tableCardList;
         this.computer = computer;
         this.user = user;
@@ -22,21 +26,24 @@ public class GameMode {
         //--------------METHODS--------------//
     public void printRound(){
 
-        //Printing round count and games border
+        //Printing round count and games border.
         System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬ Round "+ roundCount +" --- Step "+ eachRoundStep +" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
         //Printing ----COMPUTER HAND----
         computer.printHand();
-        System.out.println("");
+        System.out.println();
 
         //Printing ----TABLE----
         System.out.print("Table Deck ▶ ");
         if (tableCardList.getCard(0).getType() != 'x')
         {
+            //Printing top card's type and num.
             System.out.print("\t\t\t\t\t" +tableCardList.getCard(tableCardList.getLastIndex()).getType());
             System.out.println(tableCardList.getCard(tableCardList.getLastIndex()).getNum());
-            System.out.print("\t\t\t\t\t\t\t ");
-            for (int i = 0; i < (tableCardList.getLastIndex()); i++) {
+            System.out.print("\t\t\t\t\t\t\t");
+
+            //Printing others board cards.
+            for (int i = 0; i < (tableCardList.getLastIndex()); i++){
                 System.out.print(tableCardList.getCard(i).getType());
                 System.out.print(tableCardList.getCard(i).getNum() + " ");
             }
@@ -46,111 +53,144 @@ public class GameMode {
         System.out.println("\n");
         user.printHand();
 
-        //Printing games border
+        //Printing games border.
         System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-
     }
 
     public void printEndGameStats(){
+
         System.out.println("\nYour collected cards -> ");
 
+        //Printing user collected cards (Types and numbers).
         for (int i = 0; i <= user.getCollectedCards().getLastIndex(); i++) {
             System.out.print(user.getCollectedCards().getCard(i).getType());
             System.out.print(user.getCollectedCards().getCard(i).getNum() + " ");
         }
+
+        //Printing user's number of pistis.
         System.out.println("\nYour pisti's count: " + user.getPistiCount());
+
+        //----------------------------------------------------------------------------------------------------
+
         System.out.println("\nComputer collected cards -> ");
+        //Printing computer collected cards (Types and numbers).
         for (int i = 0; i <= computer.getCollectedCards().getLastIndex(); i++) {
             System.out.print(computer.getCollectedCards().getCard(i).getType());
             System.out.print(computer.getCollectedCards().getCard(i).getNum() + " ");
         }
+        //Printing computer's number of pistis.
         System.out.println("\nComputer pisti's count: " + computer.getPistiCount());
     }
+
     public void dealCards(){
         //If roundCount is 1, it means we are in the first dealing. That's why, we have to deal to tableDeck too.
         if (roundCount == 1){
             for (int i = 0; i < 4; i++) {
                 //Dealing for table.
-                tableCardList.addCard(unDistributedCardList.removeCard());
+                tableCardList.addCard(deck.removeCard());
                 //Dealing for user.
-                user.getHandCards().addCard(unDistributedCardList.removeCard());
+                user.getHandCards().addCard(deck.removeCard());
                 //Dealing for computer.
-                computer.getHandCards().addCard(unDistributedCardList.removeCard());
+                computer.getHandCards().addCard(deck.removeCard());
             }
         }
 
-        //If roundCount is greater than 1, it means its not first dealing. That's why,
+        //If roundCount is greater than 1, it means it's not first dealing. That's why,
         //we have to deal to just user and computer. Not tableDeck.
         else {
             for (int i = 0; i < 4; i++) {
                 //Dealing for user.
-                user.getHandCards().addCard(unDistributedCardList.removeCard());
+                user.getHandCards().addCard(deck.removeCard());
                 //Dealing for computer.
-                computer.getHandCards().addCard(unDistributedCardList.removeCard());
+                computer.getHandCards().addCard(deck.removeCard());
             }
         }
         System.out.println("Cards dealt.");
     }
 
-    public void takeLeftBehindOnTable(){
+    public void takeRemainingCardsOnBoard(){
+
+        //That if block will be executed if user collected lastly.
         if (user.getUserCollectedLastly()){
-            System.out.print("You collected lastly. That's why, ");
+            //Printing user name + information message.
+            System.out.print(user.getName() + "collected lastly. That's why, ");
+
+            //That for loop prints all cards which remaining on the board.
             for (int i = 0; i <= tableCardList.getLastIndex(); i++) {
-                System.out.print(tableCardList.getCard(i).getType());
-                System.out.print(tableCardList.getCard(i).getNum() + " ");
+                System.out.print(tableCardList.getCard(i).getType());           //Printing card type.
+                System.out.print(tableCardList.getCard(i).getNum() + " ");      //Printing card number.
             }
             System.out.println("will be yours.");
-            tableCardList.takeAllCards(user);
+            tableCardList.takeAllCards(user);                           //It transfers all cards to user.
         }
+        //That else block will be executed if computer collected lastly.
         else{
+            //Printing computer name + information message.
             System.out.print("Computer collected lastly. That's why, ");
+
+            //That for loop prints all cards which remaining on the board.
             for (int i = 0; i <= tableCardList.getLastIndex(); i++) {
-                System.out.print(tableCardList.getCard(i).getType());
-                System.out.print(tableCardList.getCard(i).getNum() + " ");
+                System.out.print(tableCardList.getCard(i).getType());           //Printing card type.
+                System.out.print(tableCardList.getCard(i).getNum() + " ");      //Printing card number.
             }
             System.out.println("will be computer's.");
-            tableCardList.takeAllCards(computer);
+            tableCardList.takeAllCards(computer);                       //It transfers all cards to user.
         }
     }
 
     public void calculatePlayerScore(Player player){
 
-        player.addScore(player.getCollectedCards().getLastIndex()+1);
-        player.addScore(player.getPistiCount() * 8);
 
-        if (doesHaveDiamonds10(player.getCollectedCards())){
-            player.addScore(2);
-        }
-        if (doesHaveClubs2(player.getCollectedCards())){
-            player.addScore(1);
-        }
-    }
+        player.addScore(player.getCollectedCards().getLastIndex()+1);   //It calculates others cards(cards with 1 point)
+
+        player.addScore(player.getPistiCount() * 8);                    //It calculates pistis points (It is 8 because..
+                                                                        //..they already were added 2 point on..
+                                                                        //..previous step because of they are 2 card).
+
+        if (doesHaveDiamonds10(player.getCollectedCards())){            //If collectedCards includes ♦10 we must add..
+            player.addScore(2);                                         //..3 point. But on the previous we already..
+        }                                                               //..added 1 point each card include ♦10..
+                                                                        //That's why, it will add just 2 point.
+
+        if (doesHaveClubs2(player.getCollectedCards())){                //If collectedCards includes ♣2 we must add..
+            player.addScore(1);                                         //..2 point. But on the previous we already..
+        }                                                               //..added 1 point each card include ♣2.
+    }                                                                   //That's why, it will add just 1 point.
     private boolean doesHaveDiamonds10(CardList cards){
+
+        //Following for loop checks if there is diamonds 10 card in the collected cards.
         for (int i = 0; i <= cards.getLastIndex(); i++) {
+            //If there is, it returns true. If it can't find diamond 10 it returns false.
             if (cards.getCard(i).getNum() == '0' && cards.getCard(i).getType() == '♦') return true;
         }
         return false;
     }
     private boolean doesHaveClubs2(CardList cards){
+        //Following for loop checks if there is clubs 2 card in the collected cards.
         for (int i = 0; i <= cards.getLastIndex(); i++) {
+            //If there is, it returns true. If it can't find clubs 2 it returns false.
             if (cards.getCard(i).getNum() == '2' && cards.getCard(i).getType() == '♣') return true;
         }
         return false;
     }
     public void addScoreWhoseCardIsMore(){
+
+        //Following if block and else if block checks which cards are more than others.
         if (user.getCollectedCards().getLastIndex() > computer.getCollectedCards().getLastIndex())
+            //If user cards are more than computers, it adds 3 point to user.
             user.addScore(3);
         else if (user.getCollectedCards().getLastIndex() < computer.getCollectedCards().getLastIndex())
+            //If computer cards are more than user, it adds 3 point to computer.
             computer.addScore(3);
     }
 
         //----------GETTERS----------//
-    public int getRoundCount(){return roundCount;}
+    public int getRoundCount(){return roundCount;}          //Returning round count.
 
         //----------SETTERS----------//
-    public void updateRoundCount(){roundCount += 1;}
-    public void updateRoundStep(){eachRoundStep += 1;}
-    public void clearRoundStep(){eachRoundStep = 1;}
+    public void updateRoundCount(){roundCount += 1;}        //Incrementing round count.
+    public void updateRoundStep(){eachRoundStep += 1;}      //Incrementing round step count.
+    public void clearRoundStep(){eachRoundStep = 1;}        //It clears round step count.
 
 }
 

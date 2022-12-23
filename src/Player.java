@@ -7,6 +7,8 @@ public class Player {
     //Users score
     private int score = 0;
     private int pistiCount = 0;
+
+    //This boolean provides us to take remaining cards to last player who collected lastly.
     private static boolean userCollectedLastly = false;
 
     //Users name
@@ -59,7 +61,7 @@ public class Player {
                 }
             }
         }
-        System.out.println();
+        System.out.println("");
     }
 
     public void playCard(){
@@ -87,21 +89,41 @@ public class Player {
         //User will play card to table.
         tableCards.addCard(handCards.removeCard(choose-1));
 
+        //Printing user played card.
         System.out.print("You played -> " + tableCards.getCard(tableCards.getLastIndex()).getType());
         System.out.println(tableCards.getCard(tableCards.getLastIndex()).getNum());
 
-        if (tableCards.canCollectAllCard()){
-            tableCards.takeAllCards(this);
-            userCollectedLastly = true;
+        if (tableCards.canCollectAllCard()){                    //Checks if it is collectable (It checks is they..
+                                                                //..same number and was joker played)
+            tableCards.takeAllCards(this);                //User takes all board's cards.
+            userCollectedLastly = true;                         //This boolean provides us to take remaining cards..
+                                                                //..to last player who collected lastly.
         }
     }
 
     private void computerPlayCard(){
 
+        //Computer has 3 checklist to play strategically.
+        //1-Firstly, computer checks if there is any matched with his hand cards and board cards.
+        //For this situation there is a method called doIHaveMatchedCard.
+        //doIHaveMatchedCard returns index of matched cards.
+        //If it can't find any matched card it returns -1 by default.
+        //If there is matched card, computer is going to play that card.
+        //tableCards.getLastCard().getNum() != 'x' checks if table last cards is valid.
         if (tableCards.getLastCard().getNum() != 'x' && doIHaveMatchedCard() != -1)
             tableCards.addCard(handCards.removeCard(doIHaveMatchedCard()));
+        //2-Secondly 'else if' condition will be executed when it couldn't find any matched number.
+        //It checks if computer hand cards includes joker with called doIHaveJoker method.
+        //doIHaveMatchedCard returns index of matched cards.
+        //If it can't find any matched card it returns -1 by default.
+        //If there is joker computer is going to play that joker.
         else if (tableCards.getLastCard().getNum() != 'x' && doIHaveJoker() != -1)
             tableCards.addCard(handCards.removeCard(doIHaveJoker()));
+        //3-Thirdly 'else' condition will be executed when it couldn't find any matched card or joker.
+        //Computer will try to play card from 0 index, if there is no card in 0. index..
+        //..it will try to play card 1 until end of the cards.
+        //Attention** it looks like plays row by row and doesn't look like randomly but his cards are already..
+        //..random because of the shuffling and dealing deck.
         else {
             for (int i = 0; i < 4; i++) {
                 if (handCards.getCard(i).getNum() != 'x'){
@@ -111,14 +133,18 @@ public class Player {
             }
         }
 
+        //Printing computer played card.
         System.out.print("Computer played -> " + tableCards.getCard(tableCards.getLastIndex()).getType());
         System.out.println(tableCards.getCard(tableCards.getLastIndex()).getNum());
 
+        //canCollectAllCard method checks can player takes all cards.
         if (tableCards.canCollectAllCard()){
             tableCards.takeAllCards(this);
             userCollectedLastly = false;
         }
     }
+
+    //If hand cards includes same number with board last card it returns index of matched card.
     private int doIHaveMatchedCard(){
         for (int i = 0; i < 4; i++) {
             if (tableCards.getLastCard().getNum() == handCards.getCard(i).getNum())
@@ -126,6 +152,8 @@ public class Player {
         }
         return -1;
     }
+
+    //If hand cards includes joker card, it returns index of matched card.
     private int doIHaveJoker(){
         for (int i = 0; i < 4; i++) {
             if (handCards.getCard(i).getNum() == 'J') return i;
