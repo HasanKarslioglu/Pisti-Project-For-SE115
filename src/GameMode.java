@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Scanner;
+import java.util.Formatter;
+
 public class GameMode {
 
                 //--------DEFINITIONS-----------//
@@ -11,6 +16,8 @@ public class GameMode {
     private Player computer;
     private Player user;
 
+    String[] scoreListNames = new String[11];
+    int[] scoreListPoints = new int[11];
 
         //--------------CONSTRUCTOR--------------//
     GameMode(CardList deck, CardList tableCardList, Player user, Player computer){
@@ -182,7 +189,95 @@ public class GameMode {
         else if (user.getCollectedCards().getLastIndex() < computer.getCollectedCards().getLastIndex())
             //If computer cards are more than user, it adds 3 point to computer.
             computer.addScore(3);
+   }
+
+
+   private void readFile(String[] scores){
+        File scoresFile;
+        Scanner reader = null;
+
+       try{
+           scoresFile = new File("Scores.txt");
+           scoresFile.createNewFile();
+           reader = new Scanner(scoresFile);
+
+           int numbersOfItems = 0;
+           while (reader.hasNextLine()){
+               scores[numbersOfItems] = reader.nextLine();
+               numbersOfItems++;
+           }
+
+       }catch (Exception e){
+           System.out.println("Scores.txt not found...");
+           return;
+
+       }finally {
+           if (reader != null)
+               reader.close();
+       }
+
+       for (int i = 0; i < 11; i++) {
+           if (scores[i] != null)
+               System.out.println(scores[i]);
+       }
+   }
+
+   private void addScoreToFile(Player winner, String[] scores){
+
+       int lastIndex = 0;
+       for (int i = 0; i < scores.length; i++) {
+           if (scores[i] == null){
+               lastIndex = i - 1;
+               break;
+           }
+       }
+
+       boolean isPlaced = false;
+
+       if (lastIndex == 0 && scores[lastIndex] == null){
+           scores[0] = winner.getName() + " " + winner.getScore();
+       }else {
+           for (int i = 0; i <= lastIndex; i++) {
+               int currentScore = Integer.parseInt(scores[i].split(" ")[1]);
+               if (winner.getScore() > currentScore) {
+                   for (int j = lastIndex; j >= i; j--) {
+                       scores[j + 1] = scores[j];
+                   }
+                   scores[i] = winner.getName() + " " + winner.getScore();
+                   isPlaced = true;
+                   lastIndex++;
+                   break;
+               }
+           }
+       }
+
+
+       if (isPlaced == false){
+            scores[lastIndex + 1] = winner.getName() + " " + winner.getScore();
+            lastIndex++;
+       }
+
+       for (int i = 0; i <= lastIndex; i++) {
+           System.out.println(scores[i]);
+       }
+   }
+   public void saveScoresToFile(Player winner){
+
+       String[] scores = new String[11];
+
+       System.out.println("\n--------OLD LIST----------");
+       readFile(scores);
+
+
+       System.out.println("--------NEW LIST----------");
+       addScoreToFile(winner, scores);
+
+
+       //Write file
+
     }
+
+
 
         //----------GETTERS----------//
     public int getRoundCount(){return roundCount;}          //Returning round count.

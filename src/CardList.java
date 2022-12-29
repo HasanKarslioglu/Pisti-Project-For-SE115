@@ -58,11 +58,11 @@ public class CardList {
     }
 
     public void shuffleDeck(){
-        //if for loop count(cards.length * 2) gets bigger, the more random it will be
-        for (int i = 0; i < (cards.length * 2); i++) {
+        //if for loop count(100) gets bigger, the more random it will be
+        for (int i = 0; i < 100; i++) {
             //Choosing two random index from cards array
-            int firstIndex = rnd.nextInt(cards.length);
-            int secondIndex = rnd.nextInt(cards.length);
+            int firstIndex = rnd.nextInt(26);
+            int secondIndex = rnd.nextInt(26)+26;
 
             //Then switch two of them
             Card temp = cards[firstIndex];

@@ -50,7 +50,7 @@ public class Main {
     public static void loopGame(){
 
         //LoopGame function will work until end of the game.
-        while (gamemode.getRoundCount() < 6){
+        while (gamemode.getRoundCount() < 2){
 
             gamemode.updateRoundCount();            //Updates round count.
             gamemode.clearRoundStep();              //It clears round step count (For more information..
@@ -96,6 +96,23 @@ public class Main {
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("Your Score = " + user.getScore());
         System.out.println("Computer Score = " + computer.getScore());
+
+        System.out.println("--------------------------------------------------------------------------------");
+
+        if (user.getScore() > computer.getScore()){
+            System.out.println("You won with "+ user.getScore() +" point.");
+            System.out.println("--------------------------------------------------------------------------------");
+            System.out.println("Here is the top 10 list.");
+            gamemode.saveScoresToFile(user);
+        }else if(user.getScore() < computer.getScore()){
+            System.out.println("Computer won with " + computer.getScore() + " point.");
+            System.out.println("--------------------------------------------------------------------------------");
+            System.out.println("Here is the top 10 list.");
+            gamemode.saveScoresToFile(computer);
+        }else {
+            System.out.println("Scoreless...");
+        }
+
 
     }
 
