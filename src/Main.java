@@ -10,9 +10,8 @@ public class Main {
     private static final Random rnd = new Random(System.currentTimeMillis());
 
 
-    //Undistributed deck were created with length of 52.
+    //Undistributed deck and table cards were created with length of 52.
     private static CardList deck = new CardList(52, rnd, sc);
-    //Cards of table were created
     private static CardList tableCards = new CardList(52, rnd, sc);
 
 
@@ -27,17 +26,25 @@ public class Main {
     private static GameMode gamemode = new GameMode(deck, tableCards, user, computer);
 
 
+            //--------------MAIN FUNCTION--------------//
+    //The program is going to be executed this function firstly.
+    public static void main(String[] args) {
+        startGame();
+        loopGame();
+        endGame();
+    }
+
 
                     //--------------FUNCTIONS--------------//
     public static void startGame(){
 
         System.out.println("Please follow the game step by step!!");
 
-        //Asking UserName.
+        //Asking and setting UserName.
         System.out.println("Please enter your name.");
         String name = sc.nextLine();
-        //Setting UserName.
         user.setName(name);
+
         //Setting ComputerName
         computer.setName("Computer");
 
@@ -50,7 +57,7 @@ public class Main {
     public static void loopGame(){
 
         //LoopGame function will work until end of the game.
-        while (gamemode.getRoundCount() < 2){
+        while (gamemode.getRoundCount() < 1){
 
             gamemode.updateRoundCount();            //Updates round count.
             gamemode.clearRoundStep();              //It clears round step count (For more information..
@@ -64,7 +71,7 @@ public class Main {
             //That for is root of game loop and each round players must plays 4 card.
             //That's why, number of loop is 4.
             for (int i = 0; i < 4; i++) {
-                if (deck.getWasUserCutDeck()) {     //If block execute if user cut the deck.
+                if (deck.getWasUserCutDeck()) {     //'If block' execute if user cut the deck.
                     computer.playCard();            //Computer plays first.
                     gamemode.updateRoundStep();
                     gamemode.printRound();
@@ -85,7 +92,7 @@ public class Main {
         System.out.println("\n\n\nHere is the end of the game!!!");
         System.out.println("--------------------------------------------------------------------------------");
 
-        gamemode.takeRemainingCardsOnBoard();           //It takes remaining cards on the board.
+        gamemode.takeRemainingCardsOnBoard();    //It takes remaining cards on the board to players who collected lastly.
         gamemode.printEndGameStats();                   //It prints stats of the finished game.
                                                         //Such as each player collected cards, number of pistis.
         gamemode.calculatePlayerScore(user);            //It calculates player score.
@@ -108,7 +115,6 @@ public class Main {
             System.out.println("Computer won with " + computer.getScore() + " point.");
             System.out.println("--------------------------------------------------------------------------------");
             System.out.println("Here is the top 10 list.");
-            gamemode.saveScoresToFile(computer);
         }else {
             System.out.println("Scoreless...");
         }
@@ -116,13 +122,6 @@ public class Main {
 
     }
 
-            //--------------MAIN FUNCTION--------------//
-    //The program will execute this function firstly.
-    public static void main(String[] args) {
-        startGame();
-        loopGame();
-        endGame();
-    }
 }
 
 

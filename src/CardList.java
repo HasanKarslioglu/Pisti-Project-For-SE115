@@ -20,7 +20,7 @@ public class CardList {
 
 
     //We need to check because we want to know who will start to game first.
-    private boolean isUserCutDeck = false;
+    private static boolean isUserCutDeck = false;
 
         //----------CONSTRUCTOR----------//
     CardList(int cardNumbers, Random rnd, Scanner sc){
@@ -116,12 +116,12 @@ public class CardList {
             System.out.println("\nComputer chose " + cutIndex + " for cutting.");
         }
 
-        //Making empty Card array. It going to be filled from old array
+        //Making empty Card array. It is going to be filled from old array
         //First make new empty array look like ( , , , , , )
         Card[] tempCardArr = new Card[cards.length];
         //For ex if my array is looks like (2,3,6,0,8,5,7) and choseNumber is 3
 
-        //Move the index after the 3rd index in the old array to new empty array
+        //Move the cards after the 3rd index in the old array to new empty array
         int index = 0;
         for (int i = cutIndex; i < cards.length; i++) {
             tempCardArr[index] = cards[i];
@@ -145,7 +145,7 @@ public class CardList {
 
     public boolean canCollectAllCard(){
         //If board cards last index is joker it returns true.
-        //If board cards last 2 index's numbers is equal it returns true. Otherwise returns false.
+        //If board cards last 2 index's numbers is equal it returns true. Otherwise, returns false.
         if (lastIndex > 0){
             if(cards[lastIndex].getNum() == 'J') return true;
             if(cards[lastIndex].getNum() == cards[lastIndex - 1].getNum()) return true;

@@ -1,7 +1,7 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.Formatter;
+
 
 public class GameMode {
 
@@ -15,9 +15,6 @@ public class GameMode {
     private CardList tableCardList;
     private Player computer;
     private Player user;
-
-    String[] scoreListNames = new String[11];
-    int[] scoreListPoints = new int[11];
 
         //--------------CONSTRUCTOR--------------//
     GameMode(CardList deck, CardList tableCardList, Player user, Player computer){
@@ -192,16 +189,38 @@ public class GameMode {
    }
 
 
-   private void readFile(String[] scores){
+            //--------TOP 10 LIST CODE-----------//
+    public void saveScoresToFile(Player winner){
+
+        //That string array is going to be store scores of the players by reading file.
+        String[] scores = new String[11];
+
+        System.out.println("\n--------OLD LIST----------");
+        readFile(scores);                                                //Reading file
+
+        System.out.println("--------NEW LIST----------");
+        organizeScoreArray(winner, scores);                              //Organizing file
+
+        writeFile(scores);                                               //Writing file
+        System.out.println("New list has been written to text file successfully.");
+    }
+
+    private void readFile(String[] scores){
+
         File scoresFile;
         Scanner reader = null;
 
        try{
            scoresFile = new File("Scores.txt");
-           scoresFile.createNewFile();
+
+           //If Scores.txt not exist it will create new one.
+           if (!scoresFile.exists())
+               scoresFile.createNewFile();
+
            reader = new Scanner(scoresFile);
 
            int numbersOfItems = 0;
+           //It stores scores to string array line by line.
            while (reader.hasNextLine()){
                scores[numbersOfItems] = reader.nextLine();
                numbersOfItems++;
@@ -209,21 +228,22 @@ public class GameMode {
 
        }catch (Exception e){
            System.out.println("Scores.txt not found...");
-           return;
 
        }finally {
            if (reader != null)
                reader.close();
        }
 
-       for (int i = 0; i < 11; i++) {
+        //Printing stored list (Not organized one).
+        for (int i = 0; i < 11; i++) {
            if (scores[i] != null)
                System.out.println(scores[i]);
        }
    }
 
-   private void addScoreToFile(Player winner, String[] scores){
+   private void organizeScoreArray(Player winner, String[] scores){
 
+       //Following for loop determines how many score in the array and then stores to lastIndex variable.
        int lastIndex = 0;
        for (int i = 0; i < scores.length; i++) {
            if (scores[i] == null){
@@ -234,49 +254,56 @@ public class GameMode {
 
        boolean isPlaced = false;
 
-       if (lastIndex == 0 && scores[lastIndex] == null){
-           scores[0] = winner.getName() + " " + winner.getScore();
-       }else {
-           for (int i = 0; i <= lastIndex; i++) {
-               int currentScore = Integer.parseInt(scores[i].split(" ")[1]);
-               if (winner.getScore() > currentScore) {
-                   for (int j = lastIndex; j >= i; j--) {
-                       scores[j + 1] = scores[j];
-                   }
-                   scores[i] = winner.getName() + " " + winner.getScore();
-                   isPlaced = true;
-                   lastIndex++;
-                   break;
+
+       //Following lines organises array based on players score.
+       for (int i = 0; i <= lastIndex; i++) {
+           //String array includes line of text. And that line have 2 part.
+           //The first part is player's name, second part is player's score.
+           //We need to split the second part and store to current score.
+           int currentScore = Integer.parseInt(scores[i].split(" ")[1]);
+           //If winner score is more than current score it will scroll the below to one bottom line
+           if (winner.getScore() > currentScore) {
+               for (int j = lastIndex; j >= i; j--) {
+                   scores[j + 1] = scores[j];
                }
+               scores[i] = winner.getName() + " " + winner.getScore();
+               isPlaced = true;
+               lastIndex++;
+               break;
            }
        }
 
 
-       if (isPlaced == false){
+       //If it couldn't find any place to store, it will be stored the last index of array.
+       if (!isPlaced){
             scores[lastIndex + 1] = winner.getName() + " " + winner.getScore();
-            lastIndex++;
        }
 
-       for (int i = 0; i <= lastIndex; i++) {
+       //Printing stored list (Organized one).
+       for (int i = 0; i < 10; i++) {
+           if (scores[i] == null) break;
            System.out.println(scores[i]);
        }
    }
-   public void saveScoresToFile(Player winner){
 
-       String[] scores = new String[11];
+   private void writeFile(String[] scores){
 
-       System.out.println("\n--------OLD LIST----------");
-       readFile(scores);
-
-
-       System.out.println("--------NEW LIST----------");
-       addScoreToFile(winner, scores);
-
-
-       //Write file
-
-    }
-
+       Formatter f = null;
+       try {
+           f = new Formatter("Scores.txt");
+           //It writes to Scores.txt line by line.
+           for (int i = 0; i < 10; i++) {
+               if (scores[i] == null) break;
+               f.format(scores[i] + "\n");
+           }
+       } catch (Exception e) {
+           System.err.println("Something went wrong.");
+       } finally {
+           if (f != null) {
+               f.close();
+           }
+       }
+   }
 
 
         //----------GETTERS----------//

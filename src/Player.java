@@ -4,14 +4,12 @@ public class Player {
 
         //------DEFINITIONS---------//
 
-    //Users score
     private int score = 0;
     private int pistiCount = 0;
 
     //This boolean provides us to take remaining cards to last player who collected lastly.
     private static boolean userCollectedLastly = false;
 
-    //Users name
     private String name;
 
     //Player's current cards
@@ -40,6 +38,7 @@ public class Player {
         //Following if's lines will print if it is computer
         if (name.equals("Computer")){
             for (int i = 0; i < 4; i++) {
+
                 //Computers hand must be hidden
                 if (handCards.getCard(i).getNum() == 'x'){
                     System.out.print("▱ ");
@@ -49,6 +48,7 @@ public class Player {
             }
             //Following else's lines will print if it is user
         }else {
+
             for (int i = 0; i < 4; i++) {
                 if (handCards.getCard(i).getType() == 'x'){
                     //It prints '▱' this symbol for empty card
@@ -60,16 +60,21 @@ public class Player {
                     System.out.print(" ");
                 }
             }
+
         }
-        System.out.println("");
+        System.out.println();
     }
 
     public void playCard(){
-        //PlayCard method have been used just for determine who call playCard method (User? or Computer?)
+
+        //PlayCard method have been used just for determine..
+        //..who call playCard method (User? or Computer?)
         if (name.equals("Computer"))
             computerPlayCard();
         else
             userPlayCard();
+
+
 
         System.out.println("\n");
     }
@@ -122,7 +127,7 @@ public class Player {
             tableCards.addCard(handCards.removeCard(doIHaveMatchedCard()));
         //2-Secondly 'else if' condition will be executed when it couldn't find any matched number.
         //It checks if computer hand cards includes joker with called doIHaveJoker method.
-        //doIHaveMatchedCard returns index of matched cards.
+        //doIHaveMatchedCard returns index+ of matched cards.
         //If it can't find any matched card it returns -1 by default.
         //If there is joker computer is going to play that joker.
         else if (tableCards.getLastCard().getNum() != 'x' && doIHaveJoker() != -1)
